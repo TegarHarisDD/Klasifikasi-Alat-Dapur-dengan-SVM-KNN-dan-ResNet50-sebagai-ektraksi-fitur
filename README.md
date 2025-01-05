@@ -113,14 +113,3 @@ project/
     └── 5_classification.ipynb      # Notebook untuk klasifikasi gambar (1.305 KB)
 ```
 
-## Lisensi
-
-[Tentukan lisensi Anda di sini]
-
-## Kontributor
-
-[Informasi nama/tim Anda]
-
-## Kontak
-
-[Informasi kontak Anda]
