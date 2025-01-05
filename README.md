@@ -1,73 +1,149 @@
-# Klasifikasi-Alat-Dapur-dengan-SVM-KNN-dan-ResNet50-sebagai-ektraksi-fitur
+# Proyek Klasifikasi Gambar dengan Augmentasi Data dan Transfer Learning
 
-Image Classification Pipeline
-Repository ini berisi pipeline untuk preprocessing, augmentasi, dan klasifikasi gambar menggunakan pendekatan berbasis transfer learning dengan ResNet50. Berikut adalah urutan langkah-langkah untuk menjalankan file dalam repository ini:
+Repositori ini berisi pipeline lengkap untuk klasifikasi gambar menggunakan augmentasi data, transfer learning, dan algoritma machine learning tradisional (SVM dan KNN).
 
-0. Resize Dataset
-File: 0_resize.py
+## Gambaran Proyek
 
-Fungsi: Mengubah ukuran semua gambar di dataset raw Anda menjadi resolusi 224x224.
-Input: Folder dataset raw (default: dataset_raw), dapat diganti sesuai nama dan path dataset Anda.
-Output: Folder dataset yang telah diproses dengan nama dataset_preprocessed.
-1. Augmentasi Tahap 1
-File: 1_augmentasi1.ipynb
+Proyek ini mengikuti proses berurutan dengan file bernomor untuk kemudahan eksekusi:
 
-Menggunakan imgaug, augmentasi gambar dilakukan dengan pipeline berikut:
+### 0. Pengubahan Ukuran Gambar (resize_images.py)
+- Mengubah ukuran gambar dari folder "dataset_raw" menjadi 224x224 piksel
+- Membuat folder baru "dataset_preprocessed" yang berisi gambar yang telah diubah ukurannya
+- Mempertahankan struktur folder asli
 
-Ubah kecerahan secara acak.
-Ubah kontras secara acak.
-Tambahkan Gaussian blur.
-Rotasi gambar secara acak.
-Skala gambar secara acak.
-Tambahkan noise Gaussian.
-Potong gambar secara acak.
-Transformasi affine secara acak.
-2. Augmentasi Tahap 2
-File: 2_augmentasi2.ipynb
+### 1. Tahap Augmentasi Pertama (augmentation_1.py)
+Menerapkan pipeline augmentasi berikut menggunakan imgaug:
+- Penyesuaian kecerahan acak (Multiply: 0.5-1.0)
+- Penyesuaian kontras acak (LinearContrast: 0.5-1.5)
+- Blur Gaussian (sigma: 0.0-1.0)
+- Rotasi acak (-25° sampai 25°)
+- Penskalaan acak (0.8-1.2)
+- Noise Gaussian aditif (skala: 0-0.05*255)
+- Pemotongan acak (0-10%)
+- Transformasi affine bertahap acak (skala: 0.01-0.05)
 
-Menambahkan dua augmentasi tambahan:
+### 2. Tahap Augmentasi Kedua (augmentation_2.py)
+Menambahkan transformasi berikut:
+- Pembalikan horizontal
+- Pembalikan vertikal
 
-Flip horizontal penuh.
-Flip vertikal penuh.
-3. Augmentasi Tahap 3
-File: 3_augmentasi3.ipynb
+### 3. Tahap Augmentasi Ketiga (augmentation_3.py)
+Menambahkan konversi grayscale:
+- Konversi lengkap ke grayscale (alpha=1.0)
 
-Menambahkan konversi penuh ke grayscale (grayscale alpha 1.0).
+### 4. Penggabungan Dataset (merge_datasets.py)
+- Menggabungkan gambar hasil augmentasi dari semua tahap
+- Membuat struktur dataset terpadu
+- Catatan: Sesuaikan class_names dengan kelas di dataset Anda
 
-4. Merge Dataset
-File: 4_merge.py
+### 5. Klasifikasi (classification.py)
+Mengimplementasikan klasifikasi gambar menggunakan:
+- Ekstraksi fitur dengan transfer learning ResNet50
+- Pengklasifikasi SVM dan KNN
+- Evaluasi dan analisis model
 
-Fungsi: Menggabungkan semua hasil augmentasi ke dalam folder Augmented sesuai dengan kelas dataset.
-Catatan: Pastikan Anda menyesuaikan variabel class_names agar sesuai dengan kelas di dataset Anda.
-5. Klasifikasi Gambar
-File: 5_classification.ipynb
+## Persyaratan
 
-Tahapan klasifikasi dilakukan dengan langkah berikut:
+### Lingkungan Pengembangan
+- VSCode: [Unduh](https://code.visualstudio.com/download)
+- Python 3.10.11: [Unduh](https://www.python.org/downloads/release/python-31011/)
 
-Persiapan dataset: Membagi dataset menjadi train-test split dan melakukan preprocessing.
-Ekstraksi fitur: Menggunakan model pre-trained ResNet50 untuk mendapatkan representasi fitur dari gambar.
-Klasifikasi: Implementasi algoritma SVM dan KNN untuk klasifikasi berbasis fitur.
-Evaluasi: Melakukan evaluasi akurasi dan analisis hasil klasifikasi.
-Persyaratan Sistem
-VSCode: Download VSCode
-Python 3.10.11: Download Python
-Library yang Dibutuhkan
-Pastikan Anda menginstal library berikut:
+### Pustaka Python
+```
+numpy==1.26.4
+tensorflow==2.9.3
+scikit-learn==1.5.2
+seaborn==0.13.2
+matplotlib==3.9.2
+imgaug
+```
 
-NumPy: 1.26.4
-TensorFlow: 2.9.3
-Scikit-learn: 1.5.2
-Seaborn: 0.13.2
-Matplotlib: 3.9.2
-Struktur Dataset
-Dataset harus memiliki struktur sebagai berikut:
-
-markdown
-Copy code
-dataset/
+## Struktur Dataset
+Dataset Anda harus mengikuti struktur ini:
+```
+dataset_raw/
     ├── class1/
     │   ├── image1.jpg
     │   ├── image2.jpg
     │   └── ...
     ├── class2/
+    │   ├── image1.jpg
+    │   └── ...
     └── ...
+```
+
+## Instalasi
+
+1. Klon repositori:
+```bash
+git clone [url-repositori]
+cd [nama-repositori]
+```
+
+2. Buat dan aktifkan virtual environment (direkomendasikan):
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux/Mac
+source venv/bin/activate
+```
+
+3. Instal paket yang diperlukan:
+```bash
+pip install -r requirements.txt
+```
+
+## Penggunaan
+
+Jalankan file secara berurutan:
+
+1. Ubah ukuran gambar:
+```bash
+python 0_resize_images.py
+```
+
+2. Jalankan tahap augmentasi:
+```bash
+python 1_augmentation_1.py
+python 2_augmentation_2.py
+python 3_augmentation_3.py
+```
+
+3. Gabungkan dataset hasil augmentasi:
+```bash
+python 4_merge_datasets.py
+```
+
+4. Jalankan klasifikasi:
+```bash
+python 5_classification.py
+```
+
+## Struktur Output
+
+Setelah menjalankan semua script, Anda akan memiliki struktur direktori berikut:
+```
+project/
+    ├── dataset_raw/
+    ├── dataset_preprocessed/
+    ├── augmented_1/
+    ├── augmented_2/
+    ├── augmented_3/
+    ├── merged_dataset/
+    └── results/
+        ├── models/
+        └── evaluation/
+```
+
+## Lisensi
+
+[Tentukan lisensi Anda di sini]
+
+## Kontributor
+
+[Informasi nama/tim Anda]
+
+## Kontak
+
+[Informasi kontak Anda]
