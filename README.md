@@ -72,28 +72,6 @@ dataset_raw/
     └── ...
 ```
 
-## Instalasi
-
-1. Klon repositori:
-```bash
-git clone [url-repositori]
-cd [nama-repositori]
-```
-
-2. Buat dan aktifkan virtual environment (direkomendasikan):
-```bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
-```
-
-3. Instal paket yang diperlukan:
-```bash
-pip install -r requirements.txt
-```
-
 ## Penggunaan
 
 Jalankan file secara berurutan:
@@ -125,15 +103,14 @@ python 5_classification.py
 Setelah menjalankan semua script, Anda akan memiliki struktur direktori berikut:
 ```
 project/
-    ├── dataset_raw/
-    ├── dataset_preprocessed/
-    ├── augmented_1/
-    ├── augmented_2/
-    ├── augmented_3/
-    ├── merged_dataset/
-    └── results/
-        ├── models/
-        └── evaluation/
+    ├── dataset_preprocessed/        # Folder untuk gambar yang telah diubah ukurannya dan augmentasi
+    ├── dataset_raw/                 # Folder dataset asli
+    ├── 0_resize.py                 # Script untuk mengubah ukuran gambar (2 KB)
+    ├── 1_augmentasi1.ipynb        # Notebook untuk augmentasi tahap pertama (14 KB)
+    ├── 2_augmentasi2.ipynb        # Notebook untuk augmentasi tahap kedua (14 KB)
+    ├── 3_augmentasi3.ipynb        # Notebook untuk augmentasi tahap ketiga (14 KB)
+    ├── 4_merge.py                 # Script untuk menggabungkan dataset (2 KB)
+    └── 5_classification.ipynb      # Notebook untuk klasifikasi gambar (1.305 KB)
 ```
 
 ## Lisensi
